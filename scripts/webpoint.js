@@ -1,10 +1,11 @@
 class WebPoint extends Point {
 
-    constructor(webEffect) {
+    constructor(webEffect, canvas) {
 
-        super(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+        super(Math.random() * canvas.width, Math.random() * canvas.height);
 
         this.webEffect = webEffect;
+        this.canvas = canvas;
 
         this.speed = Math.random() * webEffect.getOption("randomSpeed") + webEffect.getOption("baseSpeed");
         this.radius = 5;
@@ -29,14 +30,14 @@ class WebPoint extends Point {
     checkBounds(){
 
         var next = this.clonePoint().add(this.vector);
-        
+
         if(next.x <= 0)
             this.vector.x = -this.vector.x;
-        else if(next.x >= window.innerWidth)
+        else if(next.x >= this.canvas.width)
             this.vector.x = -this.vector.x;
         else if(next.y <= 0)
             this.vector.y = -this.vector.y;
-        else if(next.y >= window.innerHeight)
+        else if(next.y >= this.canvas.height)
             this.vector.y = -this.vector.y;
 
     }
@@ -46,13 +47,13 @@ class WebPoint extends Point {
         var next = this.clonePoint().add(this.vector);
 
         if(next.x <= 0)
-            this.x = Math.random() * window.innerWidth;
-        else if(next.x >= window.innerWidth)
-            this.x = Math.random() * window.innerWidth;
+            this.x = Math.random() * this.canvas.width;
+        else if(next.x >= this.canvas.width)
+            this.x = Math.random() * this.canvas.width;
         else if(next.y <= 0)
-            this.y = Math.random() * window.innerHeight;
-        else if(next.y >= window.innerHeight)
-            this.y = Math.random() * window.innerHeight;
+            this.y = Math.random() * this.canvas.height;
+        else if(next.y >= this.canvas.height)
+            this.y = Math.random() * this.canvas.height;
 
     }
 

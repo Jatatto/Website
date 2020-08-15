@@ -4,27 +4,23 @@ class WebEffect {
 
         this.loadOptions();
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
         this.webPoints = [];
         this.mouse = new Point(0,0);
 
         for(var i = 0; i < canvas.width/8; i++){
 
-            var webPoint = new WebPoint(this);
+            var webPoint = new WebPoint(this, canvas);
 
             this.webPoints.push(webPoint);
 
         }
-
-        this.rotation = 1;
 
     }
 
     loadOptions(){
 
         this.offset = 0;
+        this.rotation = 0;
         this.options = new Map();
 
         this.options.set("lineColor", "rgb(245,245,245)");    
@@ -34,7 +30,7 @@ class WebEffect {
         this.options.set("lineConnectDistance", 150);
         this.options.set("randomSpeed", 3);
         this.options.set("baseSpeed", 5);
-        this.options.set("mouseHitbox", 90);
+        this.options.set("mouseHitbox", 75);
 
     }
 
@@ -142,7 +138,7 @@ class WebEffect {
 
             }
 
-            this.offset += Math.PI / 50;
+            this.offset += Math.PI / 64;
 
         }
 
@@ -151,14 +147,8 @@ class WebEffect {
 
     getFluidRGB(offset){
 
-        var red, green, blue;
-
-        // 255 =  127 + 128
-        red = Math.sin(offset + 0) * 127 + 128;
-        green = Math.sin(offset + 2) * 127 + 128;
-        blue = Math.sin(offset + 4) * 127 + 128;        
-
-        return "rgb("+red+", "+green+", "+blue+")";
+        // 255 = 127 + 128
+        return "rgb("+(Math.sin(offset + 0) * 127 + 128)+", "+( Math.sin(offset + 2) * 127 + 128)+", "+(Math.sin(offset + 4) * 127 + 128)+")";
 
     }
 
