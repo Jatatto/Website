@@ -31,7 +31,6 @@ class Point{
 
         if(y != undefined){
 
-
             this.x -= x;
             this.y -= y;
 

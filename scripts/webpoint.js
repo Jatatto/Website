@@ -1,10 +1,12 @@
 class WebPoint extends Point {
 
-    constructor() {
+    constructor(webEffect) {
 
         super(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
 
-              this.speed = Math.random() * 5 + 5;
+        this.webEffect = webEffect;
+
+        this.speed = Math.random() * webEffect.getOption("randomSpeed") + webEffect.getOption("baseSpeed");
         this.radius = 5;
 
         this.vector = new Vector(
@@ -20,31 +22,49 @@ class WebPoint extends Point {
 
         this.add(this.vector);
         this.checkBounds();
+        this.checkStuck();
 
     }
 
     checkBounds(){
 
-        if(this.x <= 0)
+        var next = this.clonePoint().add(this.vector);
+        
+        if(next.x <= 0)
             this.vector.x = -this.vector.x;
-        else if(this.x >= window.innerWidth)
+        else if(next.x >= window.innerWidth)
             this.vector.x = -this.vector.x;
-        else if(this.y <= 0)
+        else if(next.y <= 0)
             this.vector.y = -this.vector.y;
-        else if(this.y >= window.innerHeight)
+        else if(next.y >= window.innerHeight)
             this.vector.y = -this.vector.y;
 
     }
 
-    render(ctx){
+    checkStuck(){
 
-        ctx.globalAlpha = 1;
-        ctx.fillStyle = "rgb(255,255,255)";
-        ctx.beginPath();
+        var next = this.clonePoint().add(this.vector);
 
-        ctx.arc(this.x - this.radius / 2, this.y - this.radius / 2, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
+        if(next.x <= 0)
+            this.x = Math.random() * window.innerWidth;
+        else if(next.x >= window.innerWidth)
+            this.x = Math.random() * window.innerWidth;
+        else if(next.y <= 0)
+            this.y = Math.random() * window.innerHeight;
+        else if(next.y >= window.innerHeight)
+            this.y = Math.random() * window.innerHeight;
+
+    }
+
+    render(){
+
+        this.webEffect.ctx.globalAlpha = 1;
+        this.webEffect.ctx.fillStyle = "rgb(255,255,255)";
+        this.webEffect.ctx.beginPath();
+
+        this.webEffect.ctx.arc(this.x - this.radius / 2, this.y - this.radius / 2, this.radius, 0, Math.PI * 2);
+        this.webEffect.ctx.fill();
+        this.webEffect.ctx.closePath();
 
     }
 
@@ -76,7 +96,7 @@ class WebPoint extends Point {
 
     pastMaxSpeed(){
 
-        return this.speed > 10;
+        return this.speed > this.webEffect.getOption("randomSpeed") + this.webEffect.getOption("baseSpeed");
 
     }
 

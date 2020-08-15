@@ -1,6 +1,5 @@
 class Vector extends Point {
 
-
     constructor(changeOfX, changeOfY, length){
 
         super(changeOfX, changeOfY);
@@ -35,6 +34,12 @@ class Vector extends Point {
         this.length = 1;
 
         return this;
+        
+    }
+    
+    cloneVector(){
+        
+        return new Vector(this.x, this.y, this.length);
         
     }
 
