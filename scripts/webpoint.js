@@ -2,9 +2,9 @@ class WebPoint extends Point {
 
     constructor() {
 
-        super(Math.random() * screen.availWidth, Math.random() * screen.availHeight);
+        super(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
 
-        this.speed = Math.random() * 8 + 2;
+              this.speed = Math.random() * 5 + 5;
         this.radius = 5;
 
         this.vector = new Vector(
@@ -27,11 +27,11 @@ class WebPoint extends Point {
 
         if(this.x <= 0)
             this.vector.x = -this.vector.x;
-        else if(this.x >= screen.availWidth)
+        else if(this.x >= window.innerWidth)
             this.vector.x = -this.vector.x;
         else if(this.y <= 0)
             this.vector.y = -this.vector.y;
-        else if(this.y >= screen.availHeight)
+        else if(this.y >= window.innerHeight)
             this.vector.y = -this.vector.y;
 
     }
@@ -64,6 +64,19 @@ class WebPoint extends Point {
 
         ctx.moveTo(this.x - this.radius / 2, this.y - this.radius / 2);
         ctx.lineTo(point.x - this.radius / 2, point.y - this.radius / 2);
+
+    }
+
+    setSpeed(speed){
+
+        this.speed = speed;
+        this.vector = this.vector.normalize().multiply(speed);
+
+    }
+
+    pastMaxSpeed(){
+
+        return this.speed > 10;
 
     }
 
