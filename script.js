@@ -1,7 +1,5 @@
 (function(){
 
-
-    const navBar = document.getElementById("navbar");
     const canvas = document.getElementById("webCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -9,18 +7,9 @@
 
     function init(){
 
-        document.getContact = function(){  
-
-            alert("Discord: Jake#1477\nPage coming soon...");
-
-        };
-
         canvas.width = window.innerWidth;
-
-        console.log(navBar);
-
-        canvas.height = window.innerHeight - navBar.scrollHeight;
-
+        canvas.height = window.innerHeight;
+        
         this.webEffect = new WebEffect(canvas);
 
         ctx.imageSmoothingEnabled = true;
@@ -49,7 +38,7 @@
 
         window.onmousemove = (function(e){
 
-            this.webEffect.mouse =  new Point(e.pageX, e.pageY - navBar.scrollHeight);
+            this.webEffect.mouse =  new Point(e.pageX, e.pageY);
 
         });
 
@@ -79,9 +68,15 @@
 
         window.onmousedown = (function(e){
 
-            this.webEffect.holding = true;
-            this.webEffect.mouse =  new Point(e.pageX, e.pageY - navBar.scrollHeight);
-
+            if(e.pageX >= canvas.width / 2 - 150 && e.pageX <= canvas.width / 2 + 150 && e.pageY >= canvas.height / 2 - 40 && e.pageY <= canvas.height / 2 + 40)
+                window.open("https://github.com/Jatatto");
+            else{
+            
+                this.webEffect.holding = true;
+                this.webEffect.mouse =  new Point(e.pageX, e.pageY);
+        
+            }
+            
         });
 
         window.onmouseup = (function(e){
@@ -93,7 +88,7 @@
         window.onresize = (function(e){
 
             canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight - navBar.scrollHeight;
+            canvas.height = window.innerHeight;
 
         });
 
