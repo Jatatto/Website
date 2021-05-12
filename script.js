@@ -30,7 +30,7 @@
             this.webEffect.render(canvas, ctx);
             requestAnimationFrame(render);
 
-        }, 1000/30)
+        }, 1000/60)
 
     }
 

@@ -57,15 +57,15 @@ class WebPoint extends Point {
 
     }
 
-    render(){
+    render(ctx){
 
-        this.webEffect.ctx.globalAlpha = 1;
-        this.webEffect.ctx.fillStyle = "rgb(255,255,255)";
-        this.webEffect.ctx.beginPath();
+        ctx.globaAlpha = 1;
+        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.beginPath();
 
-        this.webEffect.ctx.arc(this.x - this.radius / 2, this.y - this.radius / 2, this.radius, 0, Math.PI * 2);
-        this.webEffect.ctx.fill();
-        this.webEffect.ctx.closePath();
+        ctx.arc(this.x - this.radius / 2, this.y - this.radius / 2, this.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
 
     }
 
@@ -83,6 +83,7 @@ class WebPoint extends Point {
 
     lineTo(ctx, point){
 
+        ctx.globaAlpha = .1;
         ctx.moveTo(this.x - this.radius / 2, this.y - this.radius / 2);
         ctx.lineTo(point.x - this.radius / 2, point.y - this.radius / 2);
 

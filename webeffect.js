@@ -7,7 +7,7 @@ class WebEffect {
         this.webPoints = [];
         this.mouse = new Point(0, 0);
 
-        for (var i = 0; i < canvas.width / 8; i++) {
+        for (var i = 0; i < Math.max(canvas.width, canvas.height) / 6; i++) {
 
             var webPoint = new WebPoint(this, canvas);
 
@@ -24,7 +24,7 @@ class WebEffect {
         this.options = new Map();
 
         this.options.set("lineColor", "rgb(245,245,245)");
-        this.options.set("backgroundColor", "rgb(53,53,53)");
+        this.options.set("backgroundColor", "rgb(245,245,245)");
         this.options.set("circleColor", "rgb(245, 245, 245)");
         this.options.set("dotSpeedIncrease", 1.75);
         this.options.set("lineConnectDistance", 150);
@@ -54,12 +54,17 @@ class WebEffect {
         ctx.strokeStyle = this.getOption("lineColor");
 
         for (var i = 0; i < this.webPoints.length; i++) {
+
             for (var j = 0; j < this.webPoints.length; j++)
                 if (i != j && this.webPoints[i].getDistance(this.webPoints[j]) < this.getOption("lineConnectDistance")) {
 
                     ctx.beginPath();
-                    ctx.strokeStyle = this.getOption("lineColor");
 
+                    if (window.innerWidth > window.innerHeight)
+                        ctx.strokeStyle = this.getFluidGray(this.offset + ((window.innerWidth - this.webPoints[i].x) / window.innerWidth) * 13, 128, 127);
+                    else 
+                        ctx.strokeStyle = this.getFluidGray(this.offset + ((window.innerHeight - this.webPoints[i].y) / window.innerHeight) * 13, 128, 127)
+                    
                     this.webPoints[i].lineTo(ctx, this.webPoints[j]);
 
                     ctx.stroke();
@@ -105,45 +110,45 @@ class WebEffect {
 
         }
 
-        if (!this.holding && !within) {
+        /*        if (!this.holding && !within) {
 
-            ctx.globalAlpha = 1;
+                    ctx.globalAlpha = 1;
 
-            var increment = Math.PI / 6;
+                    var increment = Math.PI / 6;
 
-            var previous = new Point(
-                this.mouse.x + (this.getOption("mouseHitbox") * Math.cos(-increment + this.offset)),
-                this.mouse.y + (this.getOption("mouseHitbox") * Math.sin(-increment + this.offset))
-            );
+                    var previous = new Point(
+                        this.mouse.x + (this.getOption("mouseHitbox") * Math.cos(-increment + this.offset)),
+                        this.mouse.y + (this.getOption("mouseHitbox") * Math.sin(-increment + this.offset))
+                    );
 
-            for (var angle = 0; angle < (Math.PI * 2); angle += increment) {
+                    for (var angle = 0; angle < (Math.PI * 2); angle += increment) {
 
-                ctx.strokeStyle = this.getFluidRGB(angle);
-                ctx.beginPath();
+                        ctx.strokeStyle = this.getFluidRGB(angle);
+                        ctx.beginPath();
 
-                ctx.moveTo(
-                    previous.x,
-                    previous.y
-                );
+                        ctx.moveTo(
+                            previous.x,
+                            previous.y
+                        );
 
-                previous = new Point(
-                    this.mouse.x + (this.getOption("mouseHitbox") * Math.cos(angle + this.offset)),
-                    this.mouse.y + (this.getOption("mouseHitbox") * Math.sin(angle + this.offset))
-                );
+                        previous = new Point(
+                            this.mouse.x + (this.getOption("mouseHitbox") * Math.cos(angle + this.offset)),
+                            this.mouse.y + (this.getOption("mouseHitbox") * Math.sin(angle + this.offset))
+                        );
 
-                ctx.lineTo(
-                    previous.x,
-                    previous.y
-                );
+                        ctx.lineTo(
+                            previous.x,
+                            previous.y
+                        );
 
-                ctx.stroke();
+                        ctx.stroke();
 
 
-            }
+                    }
 
-            this.offset += Math.PI / 64;
+                }*/
 
-        }
+        this.offset += Math.PI / 64
 
         ctx.globalAlpha = 1;
 
@@ -161,7 +166,7 @@ class WebEffect {
 
             var char = string.charAt(i);
 
-            ctx.fillStyle = this.getFluidGray(this.offset + (Math.PI / string.length * (string.length - i)));
+            ctx.fillStyle = this.getFluidGray(this.offset + (Math.PI / string.length * (string.length - i)), 128, 64);
             ctx.fillText(char, startingX, stringY);
             startingX += ctx.measureText(char).width;
 
@@ -172,7 +177,7 @@ class WebEffect {
         ctx.font = '15px DejaVu Sans Mono';
         ctx.fillStyle = "rgb(125,125,125)";
         ctx.fillText(string, canvas.width / 2 - ctx.measureText(string).width / 2, canvas.height / 2 + 20);
-        
+
         if (within)
             ctx.fillRect(canvas.width / 2 - ctx.measureText(string).width / 2, canvas.height / 2 + 25, ctx.measureText(string).width, 3);
 
@@ -186,9 +191,9 @@ class WebEffect {
 
     }
 
-    getFluidGray(offset) {
+    getFluidGray(offset, center, random) {
 
-        var color = Math.sin(offset * 1.) * 64 + 128;
+        var color = Math.sin(offset) * random + center;
 
         return "rgb( " + color + ", " + color + ", " + color + ")";
 
