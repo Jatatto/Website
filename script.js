@@ -36,6 +36,31 @@
 
     function registerListeners(){
 
+        window.ontouchmove = (function(e){
+           
+            this.webEffect.mouse =  new Point(e.pageX, e.pageY);
+            
+        });
+        
+        window.ontouchstart = (function(e){
+           
+            if(e.pageX >= canvas.width / 2 - 150 && e.pageX <= canvas.width / 2 + 150 && e.pageY >= canvas.height / 2 - 40 && e.pageY <= canvas.height / 2 + 40)
+                window.location.replace("https://github.com/Jatatto");
+            else{
+            
+                this.webEffect.holding = true;
+                this.webEffect.mouse =  new Point(e.pageX, e.pageY);
+        
+            }
+            
+        });
+        
+        window.ontouchend = (function(e){
+           
+            this.webEffect.holding = false;
+            
+        });
+        
         window.onmousemove = (function(e){
 
             this.webEffect.mouse =  new Point(e.pageX, e.pageY);
