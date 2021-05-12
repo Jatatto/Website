@@ -69,7 +69,7 @@
         window.onmousedown = (function(e){
 
             if(e.pageX >= canvas.width / 2 - 150 && e.pageX <= canvas.width / 2 + 150 && e.pageY >= canvas.height / 2 - 40 && e.pageY <= canvas.height / 2 + 40)
-                window.open("https://github.com/Jatatto");
+                window.location.replace("https://github.com/Jatatto");
             else{
             
                 this.webEffect.holding = true;

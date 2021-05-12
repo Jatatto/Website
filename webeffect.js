@@ -41,6 +41,8 @@ class WebEffect {
 
     render(canvas, ctx) {
 
+        var within = this.mouse.x >= canvas.width / 2 - 150 && this.mouse.x <= canvas.width / 2 + 150 && this.mouse.y >= canvas.height / 2 - 40 && this.mouse.y <= canvas.height / 2 + 40;
+
         ctx.globalAlpha = 1;
         ctx.fillStyle = this.getOption("backgroundColor");
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -103,7 +105,7 @@ class WebEffect {
 
         }
 
-        if (!this.holding) {
+        if (!this.holding && !within) {
 
             ctx.globalAlpha = 1;
 
@@ -170,8 +172,8 @@ class WebEffect {
         ctx.font = '15px DejaVu Sans Mono';
         ctx.fillStyle = "rgb(125,125,125)";
         ctx.fillText(string, canvas.width / 2 - ctx.measureText(string).width / 2, canvas.height / 2 + 20);
-
-        if (this.mouse.x >= canvas.width / 2 - 150 && this.mouse.x <= canvas.width / 2 + 150 && this.mouse.y >= canvas.height / 2 - 40 && this.mouse.y <= canvas.height / 2 + 40)
+        
+        if (within)
             ctx.fillRect(canvas.width / 2 - ctx.measureText(string).width / 2, canvas.height / 2 + 25, ctx.measureText(string).width, 3);
 
     }
