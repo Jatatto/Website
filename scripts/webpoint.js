@@ -11,8 +11,8 @@ class WebPoint extends Point {
         this.radius = 5;
 
         this.vector = new Vector(
-            (Math.random() * 1) - .5,
-            (Math.random() * 1) - .5
+            0,
+            0
         );
 
         this.vector.multiply(this.speed);
@@ -54,18 +54,6 @@ class WebPoint extends Point {
             this.y = Math.random() * this.canvas.height;
         else if(next.y >= this.canvas.height)
             this.y = Math.random() * this.canvas.height;
-
-    }
-
-    render(ctx){
-
-        ctx.globaAlpha = 1;
-        ctx.fillStyle = "rgb(255,255,255)";
-        ctx.beginPath();
-
-        ctx.arc(this.x - this.radius / 2, this.y - this.radius / 2, this.radius, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
 
     }
 

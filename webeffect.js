@@ -7,7 +7,7 @@ class WebEffect {
         this.webPoints = [];
         this.mouse = new Point(0, 0);
 
-        for (var i = 0; i < Math.max(canvas.width, canvas.height) / 6; i++) {
+        for (var i = 0; i < Math.max(canvas.width, canvas.height) / 7; i++) {
 
             var webPoint = new WebPoint(this, canvas);
 
@@ -61,9 +61,9 @@ class WebEffect {
                     ctx.beginPath();
 
                     if (window.innerWidth > window.innerHeight)
-                        ctx.strokeStyle = this.getFluidGray(this.offset + ((window.innerWidth - this.webPoints[i].x) / window.innerWidth) * 13, 128, 127);
+                        ctx.strokeStyle = this.getFluidGray(this.offset + ((window.innerWidth - this.webPoints[i].x) / window.innerWidth) * 16, 245, 120);
                     else 
-                        ctx.strokeStyle = this.getFluidGray(this.offset + ((window.innerHeight - this.webPoints[i].y) / window.innerHeight) * 13, 128, 127)
+                        ctx.strokeStyle = this.getFluidGray(this.offset + ((window.innerHeight - this.webPoints[i].y) / window.innerHeight) * 16, 245, 120)
                     
                     this.webPoints[i].lineTo(ctx, this.webPoints[j]);
 
@@ -75,7 +75,7 @@ class WebEffect {
 
             if (!this.holding) {
 
-                if (distance < this.getOption("mouseHitbox")) {
+/*                if (distance < this.getOption("mouseHitbox")) {
 
                     var velocityPoint = this.webPoints[i].clonePoint().subtract(this.mouse);
 
@@ -84,7 +84,7 @@ class WebEffect {
                     this.webPoints[i].setSpeed(this.webPoints[i].speed * this.getOption("dotSpeedIncrease"));
 
                 } else if (this.webPoints[i].pastMaxSpeed())
-                    this.webPoints[i].setSpeed((Math.random() * this.getOption("randomSpeed")) + this.getOption("baseSpeed"));
+                    this.webPoints[i].setSpeed((Math.random() * this.getOption("randomSpeed")) + this.getOption("baseSpeed"));*/
 
             } else if (distance < this.getOption("mouseHitbox")) {
 
